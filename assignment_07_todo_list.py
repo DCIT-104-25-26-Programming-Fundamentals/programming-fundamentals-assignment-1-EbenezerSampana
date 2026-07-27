@@ -79,3 +79,83 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+def display_menu():
+    """Print the main menu."""
+    print()
+    print("============================")
+    print("     TO-DO LIST MENU")
+    print("============================")
+    print("1. Add task")
+    print("2. View tasks")
+    print("3. Delete task")
+    print("4. Quit")
+
+
+def add_task(tasks):
+    """Ask for a task description and store it in the list."""
+    task = input("Enter task: ").strip()
+
+    if task == "":
+        print("Error: A task cannot be empty.")
+        return
+
+    tasks.append(task)
+    print(f'Task added: "{task}"')
+
+
+def view_tasks(tasks):
+    """Show every task, numbered from 1. Returns True if any were shown."""
+    if len(tasks) == 0:
+        print("Your to-do list is empty. Add a task to get started!")
+        return False
+
+    print("Your Tasks:")
+    for position in range(len(tasks)):
+        print(f"{position + 1}. {tasks[position]}")
+    return True
+
+
+def delete_task(tasks):
+    """Show the tasks, then remove the one the user picks."""
+    # Nothing to delete if the list is empty.
+    if not view_tasks(tasks):
+        return
+
+    try:
+        choice = int(input("Enter task number to delete: "))
+    except ValueError:
+        print("Error: Please enter a valid task number.")
+        return
+
+    if choice < 1 or choice > len(tasks):
+        print("Error: That task number does not exist.")
+        return
+
+    # The user counts from 1, the list counts from 0.
+    removed = tasks.pop(choice - 1)
+    print(f'Task "{removed}" has been removed.')
+
+
+def main():
+    tasks = []
+
+    while True:
+        display_menu()
+        choice = input("Enter your choice (1-4): ").strip()
+
+        if choice == "1":
+            add_task(tasks)
+        elif choice == "2":
+            view_tasks(tasks)
+        elif choice == "3":
+            delete_task(tasks)
+        elif choice == "4":
+            print("Goodbye!")
+            break
+        else:
+            print("Error: Invalid choice. Please enter a number from 1 to 4.")
+
+
+if __name__ == "__main__":
+    main()
+
